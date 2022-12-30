@@ -29,19 +29,15 @@ const variables = {
 
 const timer = new THREE.Clock();
 
-//get Hamburg time
 const date = new Date();
 let hours = date.getHours();
 const minutes = date.getMinutes();
 const seconds = date.getSeconds();
 
-//get Vilnius time
 let hoursVilnius = date.toLocaleString('de-DE', { hour: '2-digit', hour12: false, timeZone: 'Europe/Vilnius' }); //returns string "xx Uhr"
 
-//extract number from the string
 hoursVilnius = hoursVilnius.replace(/[^0-9]/g, '');
 
-//make sure hours range from 0 to 11 because the clock cannot display bigger numbers;
 if (hours > 11) {
   hours = hours - 12;
 }
@@ -76,7 +72,6 @@ let t = 0;
 let t1 = 0;
 let t2 = 0;
 
-//* Render loop
 const controls = new THREE.TrackballControls(camera, canvas);
 
 render();
@@ -88,8 +83,6 @@ function render() {
   t1 = timer.getElapsedTime() / 60 / 60; // get hours
   t2 = timer.getElapsedTime() / 60; //get minutes
 
-  // Hamburg time side------------------------------------------------------------------------------------------
-  // move second 1st side
   secondHand.position.x = (Math.sin(Math.PI * 2 / 60 * (seconds + t)) * (variables.secondHandHeight / 2));
   secondHand.position.z = -(Math.cos(Math.PI * 2 / 60 * (seconds + t)) * (variables.secondHandHeight / 2));
   secondHand.rotation.y = -Math.PI * 2 / 60 * (seconds + t);
@@ -104,8 +97,6 @@ function render() {
   hourHand.position.z = -(Math.cos(Math.PI * 2 / 12 * (hours + minutes / 60 + t1)) * 1.5);
   hourHand.rotation.y = -Math.atan((-(Math.cos(Math.PI * 2 / 12 * (hours + minutes / 60 + t1)) * 1.5) / (Math.sin(Math.PI * 2 / 12 * (hours + minutes / 60 + t1)) * 1.5)));
 
-  // Vilnius time side ---------------------------------------------------------------------------------------
-  // move second hand
   secondHand2.position.x = -(Math.sin(Math.PI * 2 / 60 * (seconds + t)) * (variables.secondHandHeight / 2));
   secondHand2.position.z = -(Math.cos(Math.PI * 2 / 60 * (seconds + t)) * (variables.secondHandHeight / 2));
   secondHand2.rotation.y = Math.PI * 2 / 60 * (seconds + t);
